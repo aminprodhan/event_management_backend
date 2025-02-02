@@ -6,27 +6,23 @@ class EventService{
     public function __construct(){
         $this->event_model=new Event();
     }
-    public function get($request,$user=null,$whereCond=null,$withRelation=null,$orderBy=null,$paginate=0,$whereColumn=null){
+    public function get($request,$user=null,$condi=[]){
         try{
             $events=$this->event_model
-            ->where(function($query) use ($request){
-                if($whereColumn)
-                    $query->whereColumn($whereColumn);
-            })
             ->where(function($query) use ($user){
                 if($user && $user->role != 'admin')
                     $query->where('created_by', $user->id);
             })
-            ->where(function($query) use ($whereCond,$orderBy){
-                if($whereCond)
-                    $query->where($whereCond);
-                if($orderBy)
-                    $query->orderBy($orderBy);
+            ->where(function($query) use ($condi){
+                if(isset($condi['where']))
+                    $query->where($condi['where']);
+                if(isset($condi['orderBy']))
+                    $query->orderBy($condi['orderBy']);
                 else
                     $query->orderBy('id', 'desc');
             });
-            if($paginate)
-                $events=$events->paginate($paginate);
+            if(isset($condi['paginate']))
+                $events=$events->paginate($condi['paginate']);
             else
                 $events=$events->get();
             $res['status']=200;
@@ -38,17 +34,17 @@ class EventService{
         }
         return $res;
     }
-    public function show($request,$whereCond=null,$whereOrCond=null,$withRelation=null){
+    public function show($request,$condi=[]){
         try{
             $event=$this->event_model
-                ->where(function($query) use ($withRelation){
-                    if($withRelation)
-                        $query->with($withRelation);
+                ->where(function($query) use ($condi){
+                    if(isset($condi['withRelation']))
+                        $query->with($condi['withRelation']);
                 })
-                ->where($whereCond)
-                ->where(function($query) use ($whereOrCond){
-                    if($whereOrCond)
-                        $query->whereOr($whereOrCond);
+                ->where($condi['where'])
+                ->where(function($query) use ($condi){
+                    if(isset($condi['whereOr']))
+                        $query->whereOr($condi['whereOr']);
                 })
                 ->first();
             $res['status']=200;

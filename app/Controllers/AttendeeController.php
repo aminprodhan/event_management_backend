@@ -63,10 +63,10 @@ class AttendeeController{
     }
     public function events(Request $request){
         $user=Utils::getUserSession();
-        $whereCon=[
-            'is_publish' => 1
+        $conds=[
+            'where' => ['is_publish' => 1]
         ];
-        $res=$this->event_service->get($request,$user,$whereCon);
+        $res=$this->event_service->get($request,$user,$conds);
         JsonResponse::send($res['status'], $res);
     }    
 }

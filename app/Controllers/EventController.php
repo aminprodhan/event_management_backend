@@ -80,16 +80,20 @@ class EventController{
         JsonResponse::send($res['status'], $res);   
     }
     public function edit(Request $request,$event_id){
-        $whereCond=['id' => $event_id];
-        $res=$this->event_service->show($request,$whereCond);
+        $conds=[
+            'where' => ['id' => $event_id]
+        ];
+        $res=$this->event_service->show($request,$conds);
         JsonResponse::send($res['status'], $res);
     }
     public function show(Request $request,$slug){
-       
-        $whereCond=['slug' => $slug];
-        $whereOrCond=['id' => $slug];
-        $withRelation=['hosted_by'];
-        $res=$this->event_service->show($request,$whereCond,$whereOrCond,$withRelation);
+        $conds=[
+            'where' => ['slug' => $slug],
+            'whereOr' => ['id' => $slug],
+            'withRelation' => ['hosted_by']
+        ];
+
+        $res=$this->event_service->show($request,$conds);
         if($res['status'] != 200 || !isset($res['data'])){    
             JsonResponse::send($res['status'], $res);
         }
@@ -151,9 +155,13 @@ class EventController{
         }
 
         $filter_where[]=['capacity', '>', 'total_attendee',true];
-
         $filter_where[]=['is_publish', '=', 1];
-        $res=$this->event_service->get($request,null,$filter_where,null,$filter_orderBy,5);
+        $conds=[
+            'where' => $filter_where,
+            'orderBy' => $filter_orderBy,
+            'paginate' => 5,
+        ];
+        $res=$this->event_service->get($request,null,$conds);
         JsonResponse::send($res['status'], $res);
     }
     
