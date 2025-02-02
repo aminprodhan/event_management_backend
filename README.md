@@ -8,7 +8,7 @@ This is a simple event management system that allows users to create, manage, an
 
 - **User Authentication**: Secure login and registration system.
 - **Role-Based Access Control**: Admin, User.
-- **Event Creation & Management**: Create, edit,viwe and delete events.  
+- **Event Creation & Management**: Create, edit,view and delete events.  
 - **Event Dashboard**: View an overview of all events.  
 - **Event Search**: Users can search for a specific event.  
 - **Attendee Management**: Register and manage attendees.  
