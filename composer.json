@@ -1,0 +1,16 @@
+{
+    "name": "amin/event",
+    "autoload": {
+        "psr-4": {
+            "Amin\\Event\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "amin"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^6.11"
+    }
+}
