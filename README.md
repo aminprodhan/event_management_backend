@@ -53,4 +53,8 @@ DB_PASSWORD=
 
 - **Email**: [admin@gmail.com]
 - **Password**: 123
+## JSON API
+- https://event.api.infoagebd.com/api/v1/event-details/{id or slug}
 
+- test link
+- https://event.api.infoagebd.com/api/v1/event-details/next-js-for-react-and-fullstack-developers
