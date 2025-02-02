@@ -53,6 +53,7 @@ DB_PASSWORD=
 
 - **Email**: [admin@gmail.com]
 - **Password**: 123
+
 ## JSON API
 - https://event.api.infoagebd.com/api/v1/event-details/{id or slug}
 
